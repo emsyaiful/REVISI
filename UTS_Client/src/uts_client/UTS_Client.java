@@ -50,11 +50,14 @@ public class UTS_Client {
         String command, response, result;
         command="Username:"+sc.nextLine()+"\n";
         os.write(command.getBytes());
+        int flag=0;
         while (true) {            
             response = br.readLine();
             //System.out.println(response
-            String[] temp;
+            String[] temp, hashing;
             temp = response.split(" ");
+            hashing = response.split(":");
+            //System.out.println(response);
             if(response.endsWith("?")){
                 //System.out.println(response);
                 int hasilHitung = hitung(response);
@@ -62,12 +65,17 @@ public class UTS_Client {
                 System.out.println(result);
                 os.write(result.getBytes());
                 os.flush();
-            }else{
-                //System.out.println(response);
-                if(response.equalsIgnoreCase("Hash:")){    
-                }else if(response.endsWith("")){
-                    System.out.println(response);
-                }
+            }
+            if(flag==1){
+                System.out.println(response);
+                String data;
+                data = "Hash:"+response+"\n";
+                os.write(data.getBytes());
+                os.flush();
+            }
+            
+            if(hashing[0].equalsIgnoreCase("Length")){
+                flag=1;
             }
         }
         
